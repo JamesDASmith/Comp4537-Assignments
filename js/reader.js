@@ -6,6 +6,9 @@ const loadTimeLabel = document.getElementById("loadTime");
 
 let lastRenderedIds = [];
 
+document.getElementById("home-button").textContent = MESSAGES.HOME;
+document.getElementById("page-name").textContent = MESSAGES.READER;
+
 function render() {
     const notes = loadNotes();
 

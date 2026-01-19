@@ -9,6 +9,9 @@ const addBtn =          document.getElementById("addNote");
 let notes =         [];
 let noteObjects =   [];
 
+document.getElementById("home-button").textContent = MESSAGES.HOME;
+document.getElementById("page-name").textContent = MESSAGES.WRITER;
+
 function renderExistingNotes() {
     notes = loadNotes();
     notes.forEach(n => createNote(n.id, n.text));
