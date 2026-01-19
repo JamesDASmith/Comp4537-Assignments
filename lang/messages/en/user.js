@@ -1,6 +1,6 @@
 export const MESSAGES = {
     APP_TITLE:"Lab 1: JSON, Object Constructor, localStorage,",
-    STUDENT_NAME:"James Smith",
+    AUTHOR_NAME:"James Smith",
 
     ADD_NOTE: "Add Note",
     REMOVE_NOTE: "Remove",
