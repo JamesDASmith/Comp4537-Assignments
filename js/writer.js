@@ -1,3 +1,5 @@
+// chatGPT was used to help edit this file and bugfix
+
 import { Note }                 from "./note.js";
 import { saveNotes, loadNotes } from "./storage.js";
 import { MESSAGES }             from "../lang/messages/en/user.js";
@@ -11,7 +13,6 @@ let noteObjects =   [];
 
 document.getElementById("home-button").textContent = MESSAGES.HOME;
 document.getElementById("page-name").textContent = MESSAGES.WRITER;
-
 function renderExistingNotes() {
     notes = loadNotes();
     notes.forEach(n => createNote(n.id, n.text));
