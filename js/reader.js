@@ -15,6 +15,12 @@ function render() {
     const notes = loadNotes();
     const currentIds = notes.map(n => n.id);
 
+    if (JSON.stringify(currentIds) === JSON.stringify(lastRenderedIds)) {
+
+        loadTimeLabel.textContent = `${MESSAGES.LOADED_AT} ${new Date().toLocaleTimeString()}`;
+        return;
+    }
+
     notesContainer.innerHTML =  "";
     lastRenderedIds =           currentIds;
 
