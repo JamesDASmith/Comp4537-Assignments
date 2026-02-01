@@ -3,6 +3,10 @@ let Utils = require("./modules/utils.js");
 let url = require("url");
 let FileHandler = require('./modules/fileHandler.js')
 
+const path = require('path');
+const FILE_PATH = path.join(__dirname, 'file.txt');
+
+
 class simpleServer{
     constructor (PORT){
         this.port = PORT;
@@ -19,13 +23,13 @@ class simpleServer{
         res.end(`<span style="color:blue">${dateMessage}</span>`);
     } 
     else if(pathname === "/writeFile") {
-    FileHandler.appendToFile('file.txt', text);
+    FileHandler.appendToFile(FILE_PATH, text);
         res.writeHead(200, { "Content-Type": "text/html" });
         res.end(`<span style="color:blue">Text appended to file.txt</span>`);
     }
     else if (pathname === "/readFile/file.txt") {
     try {
-        let content = FileHandler.readFromFile('file.txt');
+        let content = FileHandler.readFromFile(FILE_PATH);
         res.writeHead(200, { "Content-Type": "text/html" });
         res.end(`<span style="color:blue">${content}</span>`);
     } catch (err) {
@@ -46,6 +50,6 @@ class simpleServer{
 }   
 
 
- let PORT = 3000;
+ let PORT = process.env.PORT || 3000;
  const myServer = new simpleServer(PORT)
  myServer.start();
