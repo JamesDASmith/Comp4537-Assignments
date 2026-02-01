@@ -11,36 +11,37 @@ class simpleServer{
     constructor (PORT){
         this.port = PORT;
         this.server = http.createServer((req, res) => {
-    let parsedUrl = url.parse(req.url, true);
-    let pathname = parsedUrl.pathname;
-    let query = parsedUrl.query;
-    let text = parsedUrl.query.text;
+            let parsedUrl = url.parse(req.url, true);
+            let pathname = parsedUrl.pathname;
+            let query = parsedUrl.query;
+            let text = parsedUrl.query.text;
 
-    if (pathname === "/getDate") {
-        let name = query.name;
-        let dateMessage = Utils.getDate(name);
-        res.writeHead(200, { "Content-Type": "text/html" });
-        res.end(`<span style="color:blue">${dateMessage}</span>`);
-    } 
-    else if(pathname === "/writeFile") {
-    FileHandler.appendToFile(FILE_PATH, text);
-        res.writeHead(200, { "Content-Type": "text/html" });
-        res.end(`<span style="color:blue">Text appended to file.txt</span>`);
-    }
-    else if (pathname === "/readFile/file.txt") {
-    try {
-        let content = FileHandler.readFromFile(FILE_PATH);
-        res.writeHead(200, { "Content-Type": "text/html" });
-        res.end(`<span style="color:blue">${content}</span>`);
-    } catch (err) {
-        res.writeHead(404, { "Content-Type": "text/html" });
-        res.end(`<span style="color:blue">404: file.txt not found</span>`);
-    }}
-    else{
-        res.writeHead(404, { "Content-Type": "text/html" });
-        res.end(`<span style="color:blue">Not Found</span>`);
-    }}
+            if (pathname.endsWith("/")) pathname = pathname.slice(0, -1);
 
+            if (pathname.endsWith("/getDate")) {
+                let name = query.name;
+                let dateMessage = Utils.getDate(name);
+                res.writeHead(200, { "Content-Type": "text/html" });
+                res.end(`<span style="color:blue">${dateMessage}</span>`);
+            } 
+            else if(pathname.endsWith("/writeFile")) {
+                FileHandler.appendToFile(FILE_PATH, text);
+                res.writeHead(200, { "Content-Type": "text/html" });
+                res.end(`<span style="color:blue">Text appended to file.txt</span>`);
+            }
+            else if (pathname.endsWith("/readFile/file.txt")) {
+                try {
+                    let content = FileHandler.readFromFile(FILE_PATH);
+                    res.writeHead(200, { "Content-Type": "text/html" });
+                    res.end(`<span style="color:blue">${content}</span>`);
+                } catch (err) {
+                    res.writeHead(404, { "Content-Type": "text/html" });
+                    res.end(`<span style="color:blue">404: file.txt not found</span>`);
+            }}
+            else{
+                res.writeHead(404, { "Content-Type": "text/html" });
+                res.end(`<span style="color:blue">Not Found</span>`);
+        }}
     )}
 
     start(){
