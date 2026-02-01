@@ -14,22 +14,26 @@ class simpleServer{
             let parsedUrl = url.parse(req.url, true);
             let pathname = parsedUrl.pathname;
             let query = parsedUrl.query;
-            let text = parsedUrl.query.text;
+            let text = query.text;
+
+            if (pathname.startsWith(BASE_PATH)) {
+                pathname = pathname.slice(BASE_PATH.length);
+            }
 
             if (pathname.endsWith("/")) pathname = pathname.slice(0, -1);
 
-            if (pathname.endsWith("/getDate")) {
+            if (pathname === "/getDate") {
                 let name = query.name;
                 let dateMessage = Utils.getDate(name);
                 res.writeHead(200, { "Content-Type": "text/html" });
                 res.end(`<span style="color:blue">${dateMessage}</span>`);
             } 
-            else if(pathname.endsWith("/writeFile")) {
+            else if(pathname === "/writeFile") {
                 FileHandler.appendToFile(FILE_PATH, text);
                 res.writeHead(200, { "Content-Type": "text/html" });
                 res.end(`<span style="color:blue">Text appended to file.txt</span>`);
             }
-            else if (pathname.endsWith("/readFile/file.txt")) {
+            else if (pathname === "/readFile/file.txt") {
                 try {
                     let content = FileHandler.readFromFile(FILE_PATH);
                     res.writeHead(200, { "Content-Type": "text/html" });
@@ -46,7 +50,7 @@ class simpleServer{
 
     start(){
         this.server.listen(this.port, () => {
-        console.log(`Server is running on https://localhost:${this.port}`);});
+        console.log(`Server is running on port ${this.port}`);});
         };
 }   
 
