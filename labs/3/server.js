@@ -2,9 +2,11 @@ let http = require("http");
 let Utils = require("./modules/utils.js");
 let url = require("url");
 let FileHandler = require('./modules/fileHandler.js')
-
 const path = require('path');
+
 const FILE_PATH = path.join(__dirname, 'file.txt');
+const BASE_PATH = "/COMP4537/labs/3";
+
 
 
 class simpleServer{
